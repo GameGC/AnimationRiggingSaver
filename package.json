@@ -1,0 +1,13 @@
+{
+  "name": "com.gamegc.animationriggingsaver",
+  "displayName": "AnimationRiggingSaver",
+  "version": "1.0.0",
+  "description": "Allows to save animation rigging to prefabs\nit remembers transforms",
+  "author" : {
+    "name": "GameGC"
+  },
+  "dependencies": {
+    "com.unity.modules.imgui": "1.0.0",
+    "com.unity.animation.rigging": "1.2.1"
+  }
+}
