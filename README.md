@@ -1,3 +1,3 @@
 # AnimationRiggingSaver
  Allows to save animation rigging to prefabs
- it remembers transforms
+<br> it remembers transforms
