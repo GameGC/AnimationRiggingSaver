@@ -1,5 +1,5 @@
 {
-  "name": "com.gamegc.animation.rigging.saver",
+  "name": "com.gamegc.arisaver",
   "displayName": "Animation Rigging Saver",
   "version": "1.0.0", 
   "description": "Allows to save animation rigging to prefabs\nit remembers transforms",
