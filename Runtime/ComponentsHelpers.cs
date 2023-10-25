@@ -16,7 +16,8 @@ namespace UnityEngine.Animations.Rigging.Saving
             if (Application.isPlaying) return false;
             if (target == null) return false;
             if (PrefabStageUtility.GetCurrentPrefabStage() != null) return false;
-            return !PrefabUtility.IsPartOfPrefabInstance(target.gameObject);
+            if (PrefabUtility.IsPartOfNonAssetPrefabInstance(target.gameObject)) return true;
+            return true;
         }
 #endif
 
