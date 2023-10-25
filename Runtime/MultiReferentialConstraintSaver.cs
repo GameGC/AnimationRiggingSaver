@@ -41,8 +41,9 @@ namespace UnityEngine.Animations.Rigging.Saving
             {
                 for (int i = 0; i < sourcesLength; i++)
                 {
-                    if (target.data.sourceObjects[i].transform)
-                        transformPathes.Add(AnimationUtility.CalculateTransformPath(target.data.sourceObjects[i].transform, transform.root));
+                    var currentTransform = target.data.sourceObjects[i].transform;
+                    if (currentTransform)
+                        transformPathes.Add(AnimationUtility.CalculateTransformPath(currentTransform, currentTransform.root));
                     else
                         transformPathes.Add(string.Empty);
                 }

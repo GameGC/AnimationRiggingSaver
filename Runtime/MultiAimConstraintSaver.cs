@@ -51,7 +51,7 @@ namespace UnityEngine.Animations.Rigging.Saving
             for (int i = 0; i < PropertyCount; i++)
             {
                 if (trList[i])
-                    transformPathes[i] = (AnimationUtility.CalculateTransformPath(trList[i], transform.root));
+                    transformPathes[i] = AnimationUtility.CalculateTransformPath(trList[i], trList[i].root);
                 else
                     transformPathes[i] = (string.Empty);
             }
@@ -62,8 +62,9 @@ namespace UnityEngine.Animations.Rigging.Saving
             {
                 for (int i = 0; i < sourcesLength; i++)
                 {
-                    if (target.data.sourceObjects[i].transform)
-                        transformPathes[i+PropertyCount] = (AnimationUtility.CalculateTransformPath(target.data.sourceObjects[i].transform, transform.root));
+                    var currentTransform = target.data.sourceObjects[i].transform;
+                    if (currentTransform)
+                        transformPathes[i+PropertyCount] = (AnimationUtility.CalculateTransformPath(currentTransform, currentTransform.root));
                     else
                         transformPathes[i+PropertyCount] =(string.Empty);
                 }

@@ -11,7 +11,16 @@ namespace UnityEditor.Animations.Rigging.Saving
         private static FieldInfo _fieldInfo;
 
         private Editor _wrappedEditor;
+        private Type _editorType;
 
+        private void Awake()
+        {
+            if (_wrappedEditor)
+            {
+                _wrappedEditor.serializedObject.Dispose();
+                DestroyImmediate(_wrappedEditor, false);
+            }
+        }
 
         private void OnEnable()
         {
@@ -23,7 +32,7 @@ namespace UnityEditor.Animations.Rigging.Saving
                 _fieldInfo = typeof(CustomEditor).GetField("m_InspectedType",
                     BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
 
-            var editor = _asm.GetTypes().First(t =>
+            _editorType = _asm.GetTypes().First(t =>
             {
                 if (!t.IsClass) return false;
                 var attributes = t.GetCustomAttributes(typeof(CustomEditor), false);
@@ -36,7 +45,7 @@ namespace UnityEditor.Animations.Rigging.Saving
                 return false;
             });
 
-            Editor.CreateCachedEditorWithContext(targets, serializedObject.context, editor,ref _wrappedEditor);
+            _wrappedEditor = Editor.CreateEditor(targets, _editorType);
         }
 
         public override void OnInspectorGUI()
@@ -46,6 +55,24 @@ namespace UnityEditor.Animations.Rigging.Saving
             if (EditorGUI.EndChangeCheck() && !UnityEngine.Application.isPlaying)
                 if (target is T t)
                     t.GetComponent<TS>()?.Invoke("OnValidate", 0);
+        }
+
+        private void OnDisable()
+        {
+            if (_wrappedEditor)
+            {
+                _wrappedEditor.serializedObject.Dispose();
+                DestroyImmediate(_wrappedEditor, false);
+            }
+        }
+
+        private void OnDestroy()
+        {
+            if (_wrappedEditor)
+            {
+                _wrappedEditor.serializedObject.Dispose();
+                DestroyImmediate(_wrappedEditor, false);
+            }
         }
     }
 }
