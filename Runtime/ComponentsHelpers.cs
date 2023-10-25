@@ -15,8 +15,9 @@ namespace UnityEngine.Animations.Rigging.Saving
         {
             if (Application.isPlaying) return false;
             if (target == null) return false;
-            return PrefabStageUtility.GetCurrentPrefabStage() == null &&
-                   PrefabUtility.IsPartOfPrefabInstance(target.gameObject);
+            if (PrefabStageUtility.GetCurrentPrefabStage() != null) return false;
+            if (PrefabUtility.IsPartOfNonAssetPrefabInstance(target.gameObject)) return true;
+            return true;
         }
 #endif
 
@@ -35,6 +36,9 @@ namespace UnityEngine.Animations.Rigging.Saving
             for (int i = 0, length = rootObjects.Length; i < length; i++)
             {
                 if (ignored == rootObjects[i]) continue;
+                if (path.Substring(0, path.IndexOf('/')) != rootObjects[i].name) continue;
+                path = path.Substring(path.IndexOf('/')+1);
+                
                 result = rootObjects[i].transform.Find(path);
                 if (result) break;
             }
