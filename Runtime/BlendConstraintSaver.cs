@@ -35,6 +35,7 @@ namespace UnityEngine.Animations.Rigging.Saving
             if(Application.isPlaying) return;
             if(target == null) return;
             if(PrefabStageUtility.GetCurrentPrefabStage()!=null) return;
+            if(!PrefabUtility.IsPartOfPrefabInstance(gameObject)) return;
             
             var trList = new[] {target.data.constrainedObject,target.data.sourceObjectA,target.data.sourceObjectB};
              for (int i = 0; i < PropertyCount; i++)

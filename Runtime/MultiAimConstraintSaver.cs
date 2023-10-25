@@ -44,6 +44,9 @@ namespace UnityEngine.Animations.Rigging.Saving
             if(Application.isPlaying) return;
             if(target == null) return;
             if(PrefabStageUtility.GetCurrentPrefabStage()!=null) return;
+            if(!PrefabUtility.IsPartOfPrefabInstance(gameObject)) return;
+
+            Debug.Log("validator error");
             
             //reset
             transformPathes = new string[PropertyCount + target.data.sourceObjects.Count];
