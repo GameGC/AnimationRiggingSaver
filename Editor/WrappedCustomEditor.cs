@@ -10,7 +10,7 @@ namespace UnityEditor.Animations.Rigging.Saving
         private static Assembly _asm;
         private static FieldInfo _fieldInfo;
 
-        private Editor wrappedEditor;
+        private Editor _wrappedEditor;
 
 
         private void OnEnable()
@@ -36,13 +36,13 @@ namespace UnityEditor.Animations.Rigging.Saving
                 return false;
             });
 
-            wrappedEditor = Editor.CreateEditor(target, editor);
+            _wrappedEditor = Editor.CreateEditor(targets, editor);
         }
 
         public override void OnInspectorGUI()
         {
             EditorGUI.BeginChangeCheck();
-            wrappedEditor.OnInspectorGUI();
+            _wrappedEditor.OnInspectorGUI();
             if (EditorGUI.EndChangeCheck() && !UnityEngine.Application.isPlaying)
                 if (target is T t)
                     t.GetComponent<TS>()?.Invoke("OnValidate", 0);

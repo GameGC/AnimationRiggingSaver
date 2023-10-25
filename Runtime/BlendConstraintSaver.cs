@@ -20,11 +20,11 @@ namespace UnityEngine.Animations.Rigging.Saving
         {
             var root = transform.root;
            if (!string.IsNullOrEmpty(transformPathes[0]))
-                target.data.constrainedObject = root.Find(transformPathes[0]);
+                target.data.constrainedObject = root.root.FindAnywhere(transformPathes[0]);
            if (!string.IsNullOrEmpty(transformPathes[1]))
-                target.data.sourceObjectA = root.Find(transformPathes[1]);
+                target.data.sourceObjectA = root.FindAnywhere(transformPathes[1]);
            if (!string.IsNullOrEmpty(transformPathes[2]))
-                target.data.sourceObjectB = root.Find(transformPathes[2]);
+                target.data.sourceObjectB = root.FindAnywhere(transformPathes[2]);
 
             Destroy(this);
         }
@@ -32,11 +32,8 @@ namespace UnityEngine.Animations.Rigging.Saving
     #if UNITY_EDITOR
         private void OnValidate()
         {
-            if(Application.isPlaying) return;
-            if(target == null) return;
-            if(PrefabStageUtility.GetCurrentPrefabStage()!=null) return;
-            if(!PrefabUtility.IsPartOfPrefabInstance(gameObject)) return;
-            
+            if (!ComponentsHelpers.CouldValidate(target)) return;
+
             var trList = new[] {target.data.constrainedObject,target.data.sourceObjectA,target.data.sourceObjectB};
              for (int i = 0; i < PropertyCount; i++)
             {

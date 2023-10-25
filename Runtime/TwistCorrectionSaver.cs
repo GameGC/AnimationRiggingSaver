@@ -23,13 +23,13 @@ namespace UnityEngine.Animations.Rigging.Saving
         {
             var root = transform.root;
             if (!string.IsNullOrEmpty(transformPathes[0]))
-                target.data.sourceObject = root.Find(transformPathes[0]);
+                target.data.sourceObject = root.FindAnywhere(transformPathes[0]);
 
             if (AllPropertyCount > PropertyCount)
             {
                 for (int i = PropertyCount; i < AllPropertyCount; i++)
                     if(!string.IsNullOrEmpty(transformPathes[i])) 
-                        target.data.twistNodes.SetTransform(i - PropertyCount, root.Find(transformPathes[i]));
+                        target.data.twistNodes.SetTransform(i - PropertyCount, root.FindAnywhere(transformPathes[i]));
             }
             
             Destroy(this);
@@ -38,10 +38,7 @@ namespace UnityEngine.Animations.Rigging.Saving
     #if UNITY_EDITOR
         private void OnValidate()
         {
-            if(Application.isPlaying) return;
-            if(target == null) return;
-if(PrefabStageUtility.GetCurrentPrefabStage()!=null) return;
-if(!PrefabUtility.IsPartOfPrefabInstance(gameObject)) return;
+            if (!ComponentsHelpers.CouldValidate(target)) return;
             //reset
             transformPathes.Clear();
             AllPropertyCount = PropertyCount;

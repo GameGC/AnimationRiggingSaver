@@ -23,7 +23,7 @@ namespace UnityEngine.Animations.Rigging.Saving
             var root = transform.root;
             for (int i = 0; i < AllPropertyCount; i++)
                 if(!string.IsNullOrEmpty(transformPathes[i])) 
-                    target.data.sourceObjects[i] = root.Find(transformPathes[i]);
+                    target.data.sourceObjects[i] = root.FindAnywhere(transformPathes[i]);
 
             Destroy(this);
         }
@@ -31,10 +31,7 @@ namespace UnityEngine.Animations.Rigging.Saving
     #if UNITY_EDITOR
         private void OnValidate()
         {
-            if(Application.isPlaying) return;
-            if(target == null) return;
-if(PrefabStageUtility.GetCurrentPrefabStage()!=null) return;
-if(!PrefabUtility.IsPartOfPrefabInstance(gameObject)) return;
+            if (!ComponentsHelpers.CouldValidate(target)) return;
             
             transformPathes.Clear();
             AllPropertyCount = 0;
