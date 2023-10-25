@@ -36,7 +36,7 @@ namespace UnityEditor.Animations.Rigging.Saving
                 return false;
             });
 
-            _wrappedEditor = Editor.CreateEditor(targets, editor);
+            Editor.CreateCachedEditorWithContext(targets, serializedObject.context, editor,ref _wrappedEditor);
         }
 
         public override void OnInspectorGUI()
