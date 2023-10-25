@@ -36,6 +36,9 @@ namespace UnityEngine.Animations.Rigging.Saving
             for (int i = 0, length = rootObjects.Length; i < length; i++)
             {
                 if (ignored == rootObjects[i]) continue;
+                if (path.Substring(0, path.IndexOf('/')) != rootObjects[i].name) continue;
+                path = path.Substring(path.IndexOf('/')+1);
+                
                 result = rootObjects[i].transform.Find(path);
                 if (result) break;
             }
