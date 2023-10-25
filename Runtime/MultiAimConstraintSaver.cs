@@ -7,6 +7,7 @@ using UnityEngine.Animations.Rigging;
 
 #if UNITY_EDITOR
 using UnityEditor;
+using UnityEditor.SceneManagement;
 #endif
 
 namespace UnityEngine.Animations.Rigging.Saving
@@ -42,6 +43,7 @@ namespace UnityEngine.Animations.Rigging.Saving
         {
             if(Application.isPlaying) return;
             if(target == null) return;
+if(PrefabStageUtility.GetCurrentPrefabStage()!=null) return;
             
             //reset
             transformPathes.Clear();

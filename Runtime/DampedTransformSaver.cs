@@ -4,6 +4,7 @@ using UnityEngine.Animations.Rigging;
 
 #if UNITY_EDITOR
 using UnityEditor;
+using UnityEditor.SceneManagement;
 #endif
 
 namespace UnityEngine.Animations.Rigging.Saving
@@ -32,6 +33,7 @@ namespace UnityEngine.Animations.Rigging.Saving
         {
             if(Application.isPlaying) return;
             if(target == null) return;
+if(PrefabStageUtility.GetCurrentPrefabStage()!=null) return;
             var trList = new[] {target.data.constrainedObject,target.data.sourceObject};
              for (int i = 0; i < PropertyCount; i++)
             {
