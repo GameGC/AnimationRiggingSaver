@@ -14,7 +14,7 @@ namespace UnityEngine.Animations.Rigging.Saving
 {
     public class MultiAimConstraintSaver : MonoBehaviour
     {
-        [SerializeField] private List<string> transformPathes = new List<string>(capacity:PropertyCount);
+        [SerializeField] private string[] transformPathes = new string[PropertyCount];
         [SerializeField] private  MultiAimConstraint target;
         
         private const int PropertyCount = 2;
@@ -43,19 +43,19 @@ namespace UnityEngine.Animations.Rigging.Saving
         {
             if(Application.isPlaying) return;
             if(target == null) return;
-if(PrefabStageUtility.GetCurrentPrefabStage()!=null) return;
+            if(PrefabStageUtility.GetCurrentPrefabStage()!=null) return;
             
             //reset
-            transformPathes.Clear();
+            transformPathes = new string[PropertyCount + target.data.sourceObjects.Count];
             AllPropertyCount = PropertyCount;
             
             var trList = new[] {target.data.constrainedObject,target.data.worldUpObject};
             for (int i = 0; i < PropertyCount; i++)
             {
                 if (trList[i])
-                    transformPathes.Add(AnimationUtility.CalculateTransformPath(trList[i], transform.root));
+                    transformPathes[i] = (AnimationUtility.CalculateTransformPath(trList[i], transform.root));
                 else
-                    transformPathes.Add(string.Empty);
+                    transformPathes[i] = (string.Empty);
             }
 
 
@@ -65,9 +65,9 @@ if(PrefabStageUtility.GetCurrentPrefabStage()!=null) return;
                 for (int i = 0; i < sourcesLength; i++)
                 {
                     if (target.data.sourceObjects[i].transform)
-                        transformPathes.Add(AnimationUtility.CalculateTransformPath(target.data.sourceObjects[i].transform, transform.root));
+                        transformPathes[i+PropertyCount] = (AnimationUtility.CalculateTransformPath(target.data.sourceObjects[i].transform, transform.root));
                     else
-                        transformPathes.Add(string.Empty);
+                        transformPathes[i+PropertyCount] =(string.Empty);
                 }
 
                 AllPropertyCount += sourcesLength;
