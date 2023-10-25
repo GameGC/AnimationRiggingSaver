@@ -35,10 +35,12 @@ namespace UnityEngine.Animations.Rigging.Saving
             if (!ComponentsHelpers.CouldValidate(target)) return;
 
             var trList = new[] {target.data.constrainedObject,target.data.sourceObjectA,target.data.sourceObjectB};
-            for (int i = 0; i < PropertyCount; i++)
-                if (trList[i])
-                    transformPathes[i] = AnimationUtility.CalculateTransformPath(trList[i], trList[i].root);
-
+             for (int i = 0; i < PropertyCount; i++)
+            {
+                if(trList[i])
+                    transformPathes[i] = AnimationUtility.CalculateTransformPath(trList[i], transform.root);
+            }
+           
         }
     
         private void Reset() => OnValidate();

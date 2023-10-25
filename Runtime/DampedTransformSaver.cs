@@ -36,7 +36,7 @@ namespace UnityEngine.Animations.Rigging.Saving
              for (int i = 0; i < PropertyCount; i++)
             {
                 if(trList[i])
-                    transformPathes[i] = AnimationUtility.CalculateTransformPath(trList[i], trList[i].root);
+                    transformPathes[i] = AnimationUtility.CalculateTransformPath(trList[i], transform.root);
             }
            
         }
