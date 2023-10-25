@@ -41,6 +41,7 @@ namespace UnityEngine.Animations.Rigging.Saving
             if(Application.isPlaying) return;
             if(target == null) return;
 if(PrefabStageUtility.GetCurrentPrefabStage()!=null) return;
+if(!PrefabUtility.IsPartOfPrefabInstance(gameObject)) return;
             
             //reset
             transformPathes.Clear();
