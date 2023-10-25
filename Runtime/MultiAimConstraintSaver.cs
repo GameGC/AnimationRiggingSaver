@@ -30,9 +30,11 @@ namespace UnityEngine.Animations.Rigging.Saving
 
             if (AllPropertyCount > PropertyCount)
             {
+                var copy = target.data.sourceObjects;
                 for (int i = PropertyCount; i < AllPropertyCount; i++)
                     if(!string.IsNullOrEmpty(transformPathes[i])) 
-                        target.data.sourceObjects.SetTransform(i - PropertyCount, root.FindAnywhere(transformPathes[i]));
+                        copy.SetTransform(i - PropertyCount, root.FindAnywhere(transformPathes[i]));
+                target.data.sourceObjects = copy;
             }
 
             Destroy(this);
